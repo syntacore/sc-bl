@@ -3,7 +3,7 @@
 ### @copyright (C) Syntacore 2015-2016. All rights reserved.
 ### @author mn-sc
 ###
-### @brief SC bootloader Makefile
+### @brief SC boot loader Makefile
 
 .PHONY: all riscv clean hex
 
