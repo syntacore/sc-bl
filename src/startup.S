@@ -1,6 +1,6 @@
 /// Syntacore SCR* infra
 ///
-/// @copyright (C) Syntacore 2015-2017. All rights reserved.
+/// @copyright (C) Syntacore 2015-2019. All rights reserved.
 /// @author mn-sc
 ///
 /// @brief SCR* infra startup code
@@ -18,9 +18,6 @@
 #define EXC_UM_ECALL        8
 #define EXC_SM_ECALL        9
 #define EXC_MM_ECALL        11
-#define EXC_PF_FETCH        12
-#define EXC_PF_LOAD         13
-#define EXC_PF_STORE        15
 
     .altmacro
     .macro memcpy src_beg, src_end, dst, tmp_reg
@@ -45,6 +42,16 @@ memset_2:
     bltu \dst_beg, \dst_end, memset_1
     .endm
 
+.macro load_gp addr=__global_pointer$
+    LOCAL pcrel_addr
+    .option push
+    .option norelax
+pcrel_addr:
+    auipc gp, %pcrel_hi(\addr)
+    addi  gp, gp, %pcrel_lo(pcrel_addr)
+    .option pop
+.endm
+
     .option norvc
 
     .global main
@@ -68,7 +75,7 @@ _crt_start:
     csrw mie, t0
 
     ## setup gp
-    la gp, __global_pointer$
+    load_gp
 
     csrr a0, mhartid
     bnez a0, _hart_halt
@@ -136,6 +143,7 @@ handle_trap_in_machine_mode:
     sw    s1, 9*4(sp)
     sw    a4,14*4(sp)
     sw    a5,15*4(sp)
+#ifndef __riscv_32e
     sw    a6,16*4(sp)
     sw    a7,17*4(sp)
     sw    s2,18*4(sp)
@@ -152,8 +160,9 @@ handle_trap_in_machine_mode:
     sw    t4,29*4(sp)
     sw    t5,30*4(sp)
     sw    t6,31*4(sp)
+#endif //  __riscv_32e
 
-    la    gp, __global_pointer$
+    load_gp
     mv    a1, sp    # a1 <- regs
 
     li    t0, EXC_UM_ECALL
@@ -180,6 +189,7 @@ handle_trap_in_machine_mode:
     lw    a3,13*4(sp)
     lw    a4,14*4(sp)
     lw    a5,15*4(sp)
+#ifndef __riscv_32e
     lw    a6,16*4(sp)
     lw    a7,17*4(sp)
     lw    s2,18*4(sp)
@@ -196,6 +206,7 @@ handle_trap_in_machine_mode:
     lw    t4,29*4(sp)
     lw    t5,30*4(sp)
     lw    t6,31*4(sp)
+#endif //  __riscv_32e
 
     ## return
     lw   a0, 10*4(sp)

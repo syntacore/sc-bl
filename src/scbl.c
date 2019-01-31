@@ -6,8 +6,6 @@
 /// @brief SCR* first stage boot loader
 
 #include <stdint.h>
-#include <string.h>
-#include <stdio.h>
 #include "scbl.h"
 #include "arch.h"
 #include "rtc.h"
@@ -16,9 +14,9 @@
 #include "xmodem.h"
 #include "stringify.h"
 
-#define FW_VER "1.0"
+#define FW_VER "1.2"
 #define FW_VER_CFG "scr1_RC"
-#define COPYRIGHT_STR "Copyright (C) 2015-2017 Syntacore. All rights reserved."
+#define COPYRIGHT_STR "Copyright (C) 2015-2019 Syntacore. All rights reserved."
 
 #define MAX_XMODEM_RX_LEN PLF_MEM_SIZE
 

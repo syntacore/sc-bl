@@ -42,9 +42,10 @@ Supported target platforms
 
 Target name | Description | Clock, MHz | TCM | RAM
 ------ | ----------- | --------- | ----- | -----
-arty_scr1     | Digilent Arty A7  | 25 | 64K | -
-de10lite_scr1 | Terasic DE10-lite | 20 | 64K | 64M
-a5_scr1       | Intel Arria V GX FPGA Starter Kit | 30 | 128K | 256M
+arty_scr1      | Digilent Arty A7  | 25 | 64K | -
+de10lite_scr1  | Terasic DE10-lite | 20 | 64K | 64M
+a5_scr1        | Intel Arria V GX FPGA Starter Kit | 30 | 128K | 256M
+nexys4ddr_scr1 | Digilent Nexys 4 DDR | 30 | 64K | 128M
 
 Build SCBL
 --------------

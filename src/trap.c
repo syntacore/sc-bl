@@ -7,8 +7,6 @@
 
 #include <errno.h>
 #include <stdint.h>
-#include <stdbool.h>
-#include <stdio.h>
 
 #include "platform_config.h"
 #include "scbl.h"

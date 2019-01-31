@@ -1,6 +1,6 @@
 ### Syntacore SCR* infra
 ###
-### @copyright (C) Syntacore 2015-2016. All rights reserved.
+### @copyright (C) Syntacore 2015-2019. All rights reserved.
 ### @author mn-sc
 ###
 ### @brief SC boot loader Makefile
@@ -43,10 +43,10 @@ C_OPT_FLAGS += -O2 -ffast-math -fomit-frame-pointer -fno-exceptions \
                -fno-asynchronous-unwind-tables -fno-unwind-tables \
                -fdata-sections -ffunction-sections -fno-common -fno-builtin-printf
 
-ASM_DEFINES += -D__ASSEMBLY__=1
-INCLUDE_DIRS  += -Icommon -I. -Isrc
+ASM_DEFINES :=
+INCLUDE_DIRS += -Icommon -I. -Isrc
 
-c_src = uart.c xmodem.c init.c trap.c leds.c printf.c
+c_src = uart.c xmodem.c init.c trap.c leds.c
 asm_src = startup.S
 
 c_objs = $(patsubst %.c, $(build_dir)/%.o, $(c_src))

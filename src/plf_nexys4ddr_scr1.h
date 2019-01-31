@@ -1,12 +1,12 @@
 /// Syntacore SCR* framework
 ///
-/// @copyright (C) Syntacore 2015-2017. All rights reserved.
+/// @copyright (C) Syntacore 2015-2019. All rights reserved.
 /// @author mn-sc
 ///
-/// @brief platform specific configurations
+/// @brief platform specific configurations (Digilent Nexys 4 DDR)
 
-#ifndef PLATFORM_ARTY_SCR1_CONFIG_H
-#define PLATFORM_ARTY_SCR1_CONFIG_H
+#ifndef PLATFORM_A5_SCR1_CONFIG_H
+#define PLATFORM_A5_SCR1_CONFIG_H
 
 #define PLF_CPU_NAME "SCR1"
 #define PLF_IMPL_STR "Syntacore FPGA"
@@ -14,7 +14,7 @@
 // RTC timebase: 1 MHZ
 #define PLF_RTC_TIMEBASE 1000000
 // sys clk freq, MHz
-#define PLF_SYS_FREQ     25000000
+#define PLF_SYS_FREQ     30000000
 // cpu clk freq
 #define PLF_CPU_FREQ     PLF_SYS_FREQ
 
@@ -22,7 +22,7 @@
 // memory configuration
 //----------------------
 #define PLF_MEM_BASE     (0)
-#define PLF_MEM_SIZE     (256*1024*1024)
+#define PLF_MEM_SIZE     (128*1024*1024)
 #define PLF_MEM_ATTR     0
 #define PLF_MEM_NAME     "DDR"
 
@@ -47,7 +47,7 @@
 #define PLF_OCRAM_NAME   "On-Chip RAM"
 
 #define PLF_MEM_MAP                                                     \
-/*    {PLF_MEM_BASE, PLF_MEM_SIZE, PLF_MEM_ATTR, PLF_MEM_NAME},*/           \
+    {PLF_MEM_BASE, PLF_MEM_SIZE, PLF_MEM_ATTR, PLF_MEM_NAME},           \
     {PLF_TCM_BASE, PLF_TCM_SIZE, PLF_TCM_ATTR, PLF_TCM_NAME},           \
     {PLF_MTIMER_BASE, PLF_MTIMER_SIZE, PLF_MTIMER_ATTR, PLF_MTIMER_NAME}, \
     {PLF_MMIO_BASE, PLF_MMIO_SIZE, PLF_MMIO_ATTR, PLF_MMIO_NAME},       \
@@ -58,21 +58,7 @@
 #define PLF_UART0_16550
 #define PLF_UART0_IRQ 0
 // FPGA build ID
-#define PLF_BLD_ID_ADDR  (PLF_MMIO_BASE + 0x1000)
-// FPGA system ID
-#define PLF_SYS_ID_ADDR  (PLF_MMIO_BASE + 0)
-
-// LEDs
-#define PLF_PINLED_ADDR  (PLF_MMIO_BASE + 0x20000)
-#define PLF_PINLED_NUM   0//12
-#define PLF_PINLED_INV   0
-#define PLF_PINLED_NAME "LEDS"
-
-// switches
-#define PLF_DIP_ADDR (PLF_MMIO_BASE + 0x21000)
-#define PLF_DIP_NUM  4
-#define PLF_DIP_IRQ  1
-#define PLF_DIP_NAME "SW/BTN"
+#define PLF_BLD_ID_ADDR  (PLF_MMIO_BASE + 0)
 
 // external interrupt lines
 
@@ -80,4 +66,4 @@
         [0 ... 31] = ~0,                 \
         [0] = PLF_UART0_IRQ
 
-#endif // PLATFORM_ARTY_SCR1_CONFIG_H
+#endif // PLATFORM_A5_SCR1_CONFIG_H

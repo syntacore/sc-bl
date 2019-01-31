@@ -1,6 +1,6 @@
 /// Syntacore SCR* infra
 ///
-/// @copyright (C) Syntacore 2015-2017. All rights reserved.
+/// @copyright (C) Syntacore 2015-2019. All rights reserved.
 /// @author mn-sc
 ///
 /// @brief UART defs and inline funcs
@@ -135,20 +135,20 @@ void uart_puthex8(uint8_t val);
 void uart_puthex16(uint16_t val);
 void uart_puthex32(uint32_t val);
 void uart_puthex64(uint64_t val);
-void uart_putdec(uint32_t v);
+void uart_putdec(unsigned long v);
 void uart_puts(const char *s);
 unsigned long uart_read_hex(void);
 unsigned uart_read_str(char *buf, unsigned size);
 // inlines
 static inline void uart_puthex(unsigned long val)
 {
-#ifdef __riscv128
+#if __riscv_xlen > 64
     uart_puthex32(val >> 32*3);
     uart_puthex32(val >> 32*2);
-#endif // __riscv128
-#ifdef __riscv64
+#endif
+#if __riscv_xlen > 32
     uart_puthex32(val >> 32);
-#endif // __riscv64
+#endif
     uart_puthex32(val);
 }
 static inline int uart_putc(int c)
