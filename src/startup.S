@@ -1,6 +1,6 @@
 /// Syntacore SCR* infra
 ///
-/// @copyright (C) Syntacore 2015-2019. All rights reserved.
+/// @copyright (C) Syntacore 2015-2021. All rights reserved.
 /// @author mn-sc
 ///
 /// @brief SCR* infra startup code

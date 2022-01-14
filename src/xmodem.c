@@ -1,6 +1,6 @@
 /// Syntacore SCR* infra
 ///
-/// @copyright (C) Syntacore 2015-2017. All rights reserved.
+/// @copyright (C) Syntacore 2015-2021. All rights reserved.
 /// @author mn-sc
 ///
 /// @brief tiny xmodem loader
@@ -68,7 +68,7 @@ int xmodem_receive(uint8_t *dest, unsigned destsz)
     uint16_t partial_crc;
     uint8_t seq[2];
     uint8_t seqnum = 1;
-    uint16_t buf_crc;
+    uint16_t buf_crc = 0;
     int pktsize;
     int rxsize;
 

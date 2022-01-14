@@ -1,6 +1,6 @@
 /// Syntacore SCR* framework
 ///
-/// @copyright (C) Syntacore 2015-2017. All rights reserved.
+/// @copyright (C) Syntacore 2015-2021. All rights reserved.
 /// @author mn-sc
 ///
 /// @brief platform specific configurations
@@ -16,7 +16,9 @@
 // sys clk freq, MHz
 #define PLF_SYS_FREQ     25000000
 // cpu clk freq
-#define PLF_CPU_FREQ     PLF_SYS_FREQ
+#define PLF_CPU_FREQ_ADDR   (0xff002000)
+#define PLF_CPU_FREQ_BASE    ((volatile uint32_t*)(PLF_CPU_FREQ_ADDR))
+#define PLF_CPU_FREQ        ((uint32_t)(*PLF_CPU_FREQ_BASE))
 
 //----------------------
 // memory configuration
@@ -47,7 +49,7 @@
 #define PLF_OCRAM_NAME   "On-Chip RAM"
 
 #define PLF_MEM_MAP                                                     \
-/*    {PLF_MEM_BASE, PLF_MEM_SIZE, PLF_MEM_ATTR, PLF_MEM_NAME},*/           \
+    {PLF_MEM_BASE, PLF_MEM_SIZE, PLF_MEM_ATTR, PLF_MEM_NAME},           \
     {PLF_TCM_BASE, PLF_TCM_SIZE, PLF_TCM_ATTR, PLF_TCM_NAME},           \
     {PLF_MTIMER_BASE, PLF_MTIMER_SIZE, PLF_MTIMER_ATTR, PLF_MTIMER_NAME}, \
     {PLF_MMIO_BASE, PLF_MMIO_SIZE, PLF_MMIO_ATTR, PLF_MMIO_NAME},       \
@@ -57,10 +59,12 @@
 #define PLF_UART0_BASE   (PLF_MMIO_BASE + 0x10000)
 #define PLF_UART0_16550
 #define PLF_UART0_IRQ 0
+
 // FPGA build ID
-#define PLF_BLD_ID_ADDR  (PLF_MMIO_BASE + 0x1000)
-// FPGA system ID
-#define PLF_SYS_ID_ADDR  (PLF_MMIO_BASE + 0)
+#define PLF_BLD_ID_ADDR     (PLF_MMIO_BASE + 0x1000)
+// FPGA system ID - SOC_ID
+#define PLF_SOC_ID_ADDR     (PLF_MMIO_BASE + 0)
+#define PLF_SYS_ID_ADDR     PLF_SOC_ID_ADDR
 
 // LEDs
 #define PLF_PINLED_ADDR  (PLF_MMIO_BASE + 0x20000)
@@ -69,12 +73,24 @@
 #define PLF_PINLED_NAME "LEDS"
 
 // switches
-#define PLF_DIP_ADDR (PLF_MMIO_BASE + 0x21000)
-#define PLF_DIP_NUM  4
-#define PLF_DIP_IRQ  1
-#define PLF_DIP_NAME "SW/BTN"
+// #define PLF_DIP_ADDR (PLF_MMIO_BASE + 0x29000)
+// #define PLF_DIP_NUM  4
+// #define PLF_DIP_IRQ  1
+// #define PLF_DIP_NAME "DIP SW"
+
+// Push Buttons (BTN) 
+#define PLF_BTN_ADDR (PLF_MMIO_BASE + 0x28000)
+#define PLF_BTN_NUM  4
+#define PLF_BTN_IRQ  1
+#define PLF_BTN_NAME "BTN"
+
+#define PLF_RGBLED_ADDR (PLF_MMIO_BASE + 0x21000)
+#define PLF_RGBLED_NUM  12
+#define PLF_RGBLED_INV  0
+#define PLF_RGBLED_NAME "LEDs RGB"
 
 // external interrupt lines
+#define PLF_INTLINE_XLNX_UART 0
 
 #define PLF_IRQ_MAP                      \
         [0 ... 31] = ~0,                 \

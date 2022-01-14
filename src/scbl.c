@@ -1,6 +1,6 @@
 /// Syntacore SCR* infra
 ///
-/// @copyright (C) Syntacore 2015-2017. All rights reserved.
+/// @copyright (C) Syntacore 2015-2021. All rights reserved.
 /// @author mn-sc
 ///
 /// @brief SCR* first stage boot loader
@@ -16,7 +16,7 @@
 
 #define FW_VER "1.2"
 #define FW_VER_CFG "scr1_RC"
-#define COPYRIGHT_STR "Copyright (C) 2015-2019 Syntacore. All rights reserved."
+#define COPYRIGHT_STR "Copyright (C) 2015-2021 Syntacore. All rights reserved."
 
 #define MAX_XMODEM_RX_LEN PLF_MEM_SIZE
 
@@ -76,7 +76,7 @@ void hwinfo(void)
     uart_puthex32(mimpid);
     uart_puts("\n");
     if (get_system_id()) {
-        uart_puts("SYSID: ");
+        uart_puts("SOCID: ");
         uart_puthex32(get_system_id());
         uart_puts(" ");
     }
@@ -128,6 +128,7 @@ static void cmd_plf_info(void *arg)
     uart_print_info();
     leds_print_info();
     dips_print_info();
+    btn_print_info();
 }
 
 static void cmd_xload(void *arg)

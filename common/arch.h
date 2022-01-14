@@ -45,8 +45,8 @@ static inline unsigned long __attribute__((const)) arch_badaddr(void)
 
 static inline uint32_t __attribute__((const)) get_system_id(void)
 {
-#ifdef PLF_SYS_ID_ADDR
-    return *(volatile uint32_t*)PLF_SYS_ID_ADDR;
+#ifdef PLF_SOC_ID_ADDR
+    return *(volatile uint32_t*)PLF_SOC_ID_ADDR;
 #else
     return 0;
 #endif

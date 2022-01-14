@@ -1,6 +1,6 @@
 /// Syntacore SCR* framework
 ///
-/// @copyright (C) Syntacore 2015-2017. All rights reserved.
+/// @copyright (C) Syntacore 2015-2021. All rights reserved.
 /// @author mn-sc
 ///
 /// @brief platform specific configurations (Arria V GX FPGA Starter Kit)
@@ -16,7 +16,9 @@
 // sys clk freq, MHz
 #define PLF_SYS_FREQ     30000000
 // cpu clk freq
-#define PLF_CPU_FREQ     PLF_SYS_FREQ
+#define PLF_CPU_FREQ_ADDR   (0xff002000)
+#define PLF_CPU_FREQ_BASE    ((volatile uint32_t*)(PLF_CPU_FREQ_ADDR))
+#define PLF_CPU_FREQ        ((uint32_t)(*PLF_CPU_FREQ_BASE))
 
 //----------------------
 // memory configuration
@@ -57,8 +59,12 @@
 #define PLF_UART0_BASE   (PLF_MMIO_BASE + 0x10000)
 #define PLF_UART0_16550
 #define PLF_UART0_IRQ 0
+
 // FPGA build ID
-#define PLF_BLD_ID_ADDR  (PLF_MMIO_BASE + 0)
+#define PLF_BLD_ID_ADDR     (PLF_MMIO_BASE + 0x1000)
+// FPGA system ID - SOC_ID
+#define PLF_SOC_ID_ADDR     (PLF_MMIO_BASE + 0)
+#define PLF_SYS_ID_ADDR     PLF_SOC_ID_ADDR
 
 // external interrupt lines
 

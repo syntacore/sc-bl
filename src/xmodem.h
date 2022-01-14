@@ -1,6 +1,6 @@
 /// Syntacore SCR* infra
 ///
-/// @copyright (C) Syntacore 2015-2016. All rights reserved.
+/// @copyright (C) Syntacore 2015-2021. All rights reserved.
 /// @author mn-sc
 ///
 /// @brief tiny xmodem loader

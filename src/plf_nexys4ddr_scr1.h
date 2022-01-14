@@ -1,12 +1,12 @@
 /// Syntacore SCR* framework
 ///
-/// @copyright (C) Syntacore 2015-2019. All rights reserved.
+/// @copyright (C) Syntacore 2015-2021. All rights reserved.
 /// @author mn-sc
 ///
 /// @brief platform specific configurations (Digilent Nexys 4 DDR)
 
-#ifndef PLATFORM_A5_SCR1_CONFIG_H
-#define PLATFORM_A5_SCR1_CONFIG_H
+#ifndef PLATFORM_NEXYS4DDR_SCR1_CONFIG_H
+#define PLATFORM_NEXYS4DDR_SCR1_CONFIG_H
 
 #define PLF_CPU_NAME "SCR1"
 #define PLF_IMPL_STR "Syntacore FPGA"
@@ -16,7 +16,10 @@
 // sys clk freq, MHz
 #define PLF_SYS_FREQ     30000000
 // cpu clk freq
-#define PLF_CPU_FREQ     PLF_SYS_FREQ
+//#define PLF_CPU_FREQ     PLF_SYS_FREQ
+#define PLF_CPU_FREQ_ADDR   (0xff002000)
+#define PLF_CPU_FREQ_BASE    ((volatile uint32_t*)(PLF_CPU_FREQ_ADDR))
+#define PLF_CPU_FREQ        ((uint32_t)(*PLF_CPU_FREQ_BASE))
 
 //----------------------
 // memory configuration
@@ -27,7 +30,7 @@
 #define PLF_MEM_NAME     "DDR"
 
 #define PLF_TCM_BASE     (0xf0000000)
-#define PLF_TCM_SIZE     (64*1024)
+#define PLF_TCM_SIZE     (128*1024)
 #define PLF_TCM_ATTR     0
 #define PLF_TCM_NAME     "TCM"
 
@@ -57,8 +60,12 @@
 #define PLF_UART0_BASE   (PLF_MMIO_BASE + 0x10000)
 #define PLF_UART0_16550
 #define PLF_UART0_IRQ 0
+
 // FPGA build ID
-#define PLF_BLD_ID_ADDR  (PLF_MMIO_BASE + 0)
+#define PLF_BLD_ID_ADDR     (PLF_MMIO_BASE + 0x1000)
+// FPGA system ID - SOC_ID
+#define PLF_SOC_ID_ADDR     (PLF_MMIO_BASE + 0)
+#define PLF_SYS_ID_ADDR     PLF_SOC_ID_ADDR
 
 // external interrupt lines
 
@@ -66,4 +73,4 @@
         [0 ... 31] = ~0,                 \
         [0] = PLF_UART0_IRQ
 
-#endif // PLATFORM_A5_SCR1_CONFIG_H
+#endif // PLATFORM_NEXYS4DDR_SCR1_CONFIG_H

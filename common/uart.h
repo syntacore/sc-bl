@@ -10,6 +10,15 @@
 
 #include "platform_config.h"
 
+#define UART_CLK_FREQ       (uint32_t)(((PLF_CPU_FREQ) > 0) ? (PLF_CPU_FREQ) : (PLF_SYS_FREQ))
+#define UART_BAUD_RATE  PLF_UART_BAUDRATE
+#ifdef PLF_UART0_16550
+    #define UART_115200_CLK_DIVISOR (UART_CLK_FREQ / UART_BAUD_RATE + 7) / 16
+#elif defined(PLF_UART0_SCR_RTL)
+#else // PLF_UART0_16550
+    #define UART_115200_CLK_DIVISOR  UART_CLK_FREQ / UART_BAUD_RATE
+#endif // PLF_UART0_16550
+
 #ifdef PLF_UART0_BASE
 
 // FPGA UART ports

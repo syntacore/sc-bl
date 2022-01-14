@@ -1,6 +1,6 @@
 /// Syntacore SCR* framework
 ///
-/// @copyright (C) Syntacore 2015-2017. All rights reserved.
+/// @copyright (C) Syntacore 2015-2021. All rights reserved.
 /// @author mn-sc
 ///
 /// @brief platform specific configurations
@@ -16,7 +16,9 @@
 // sys clk freq, MHz
 #define PLF_SYS_FREQ     20000000
 // cpu clk freq
-#define PLF_CPU_FREQ     PLF_SYS_FREQ
+#define PLF_CPU_FREQ_ADDR   (0xff002000)
+#define PLF_CPU_FREQ_BASE    ((volatile uint32_t*)(PLF_CPU_FREQ_ADDR))
+#define PLF_CPU_FREQ        ((uint32_t)(*PLF_CPU_FREQ_BASE))
 
 //----------------------
 // memory configuration
@@ -59,15 +61,18 @@
 #define PLF_UART0_IRQ 0
 
 // FPGA build ID
-#define PLF_BLD_ID_ADDR  (PLF_MMIO_BASE + 0)
+#define PLF_BLD_ID_ADDR     (PLF_MMIO_BASE + 0x1000)
+// FPGA system ID - SOC_ID
+#define PLF_SOC_ID_ADDR     (PLF_MMIO_BASE + 0)
+#define PLF_SYS_ID_ADDR     PLF_SOC_ID_ADDR
 
 // LEDs
-#define PLF_PINLED_ADDR  (PLF_MMIO_BASE + 0x21000)
-#define PLF_PINLED_NUM   10
+#define PLF_PINLED_ADDR  (PLF_MMIO_BASE + 0x20000)
+#define PLF_PINLED_NUM   8
 #define PLF_PINLED_INV   0
 #define PLF_PINLED_NAME "LED"
 
-#define PLF_HEXLED_ADDR (PLF_MMIO_BASE + 0x20000)
+#define PLF_HEXLED_ADDR (PLF_MMIO_BASE + 0x22000)
 #define PLF_HEXLED_ADDR_MAP                     \
     {(PLF_HEXLED_ADDR + 0x20), 8},              \
     {(PLF_HEXLED_ADDR + 0x20), 0},              \
@@ -91,9 +96,9 @@
 #define HEXLED_SEG_P 0x80
 
 // DIP switches
-#define PLF_DIP_ADDR (PLF_MMIO_BASE + 0x22000)
+#define PLF_DIP_ADDR (PLF_MMIO_BASE + 0x29000)
 #define PLF_DIP_NUM  10
-#define PLF_DIP_NAME "DIP sw"
+#define PLF_DIP_NAME "DIP SW"
 
 // external interrupt lines
 

@@ -74,6 +74,12 @@ void dips_print_info(void);
 #define dips_print_info()  do {} while (0)
 #endif // PLF_DIP_ADDR
 
+#ifdef PLF_BTN_ADDR
+void btn_print_info(void);
+#else // PLF_BTN_ADDR
+#define btn_print_info()  do {} while (0)
+#endif // PLF_BTN_ADDR
+
 #endif // __ASSEMBLER__
 
 #endif // SC1_FPGA_LEDS_H

@@ -115,3 +115,17 @@ void dips_print_info(void)
     uart_putc('\n');
 }
 #endif // PLF_DIP_ADDR
+#ifdef PLF_BTN_ADDR
+void btn_print_info(void)
+{
+    uart_puthex(PLF_BTN_ADDR);
+#ifdef PLF_BTN_IRQ
+    uart_puts("\tirq ");
+    uart_putdec(PLF_BTN_IRQ);
+#else // PLF_BTN_IRQ
+    uart_puts("\t ");
+#endif // PLF_BTN_IRQ
+    uart_puts("\t" PLF_BTN_NAME);
+    uart_putc('\n');
+}
+#endif //PLF_BTN_ADDR
