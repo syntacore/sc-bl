@@ -17,9 +17,11 @@
 #define FW_VER "1.2"
 #define FW_VER_CFG "scr1_RC"
 #define COPYRIGHT_STR "Copyright (C) 2015-2021 Syntacore. All rights reserved."
-
+#ifdef PLATFORM_TANG_PRIMER_20_K_SCR1_CONFIG_H
+#define MAX_XMODEM_RX_LEN PLF_TCM_SIZE
+#else 
 #define MAX_XMODEM_RX_LEN PLF_MEM_SIZE
-
+#endif
 #define LEDS_TASK_DELAY_MS  200
 #define MAX_HEX_LEDS        8
 
@@ -126,9 +128,11 @@ static void cmd_plf_info(void *arg)
     hwinfo();
     uart_puts("Platform configuration:\n");
     uart_print_info();
-    leds_print_info();
-    dips_print_info();
-    btn_print_info();
+    #ifndef PLATFORM_TANG_PRIMER_20_K_SCR1_CONFIG_H
+        leds_print_info();
+        dips_print_info();
+        btn_print_info();
+    #endif
 }
 
 static void cmd_xload(void *arg)
@@ -304,8 +308,9 @@ int main(void)
 {
     scr_rtc_init();
     sc1f_uart_init();
-    sc1f_leds_init();
-
+    #ifndef PLATFORM_TANG_PRIMER_20_K_SCR1_CONFIG_H
+        sc1f_leds_init();
+    #endif
     show_header();
     hwinfo();
     usage();
@@ -319,9 +324,13 @@ int main(void)
 
         int c;
         while ((c = sc1f_uart_getch_nowait()) == -1) {
+            #ifndef PLATFORM_TANG_PRIMER_20_K_SCR1_CONFIG_H
             indication_tasks();
+            #endif
         }
+        #ifndef PLATFORM_TANG_PRIMER_20_K_SCR1_CONFIG_H
         sc1f_leds_set(0);
+        #endif
 
         const struct scbl_cmd *cmd = 0;
 
