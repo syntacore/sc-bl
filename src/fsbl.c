@@ -961,6 +961,29 @@ static void cmd_flip_dbg(void *arg)
     }
 }
 
+#ifdef PLF_HWCNT_DUMP
+/* race-free read of a 64-bit counter split across lo/hi CSRs (RV32) */
+#define read_counter64(dst, lo, hi) do{			\
+    uint32_t _h, _l, _h2;                               \
+    do { _h = read_csr(hi); _l = read_csr(lo);          \
+         _h2 = read_csr(hi); } while (_h != _h2);       \
+    (dst) = ((uint64_t)_h << 32) | _l; }while(0)
+
+static void cmd_dump_counters(void *arg)
+{
+    uint64_t cyc, inst, tim;
+
+    read_counter64(cyc,  mcycle,   mcycleh);
+    read_counter64(inst, minstret, minstreth);
+    read_counter64(tim,  time,     timeh);
+
+    uart_puts("HW counters:\n");
+    uart_puts("  cycle:   "); uart_puthex64(cyc);  uart_putc('\n');
+    uart_puts("  instret: "); uart_puthex64(inst); uart_putc('\n');
+    uart_puts("  time:    "); uart_puthex64(tim);  uart_putc('\n');
+}
+#endif // PLF_HWCNT_DUMP
+
 static void cmd_print_time(void *arg)
 {
     char buf[64];
@@ -1014,6 +1037,9 @@ static const struct scbl_cmd scbl_commands[] = {
     {'t' | SCBL_CMD_ARG_ADDR, "mem test", cmd_mem_test, 0},
 #endif // PLF_MEM_TEST_ENABLED
     {'T' | SCBL_CMD_HIDDEN, "current time", cmd_print_time, 0},
+#ifdef PLF_HWCNT_DUMP
+    {'c', "dump hw counters", cmd_dump_counters, 0},
+#endif // PLF_HWCNT_DUMP
     {'!' | SCBL_CMD_HIDDEN, 0, cmd_flip_dbg, 0},
 #ifdef PLF_CACHE_CFG
     {'$' | SCBL_CMD_HIDDEN, "flip L1$", cmd_flip_l1cache, 0},

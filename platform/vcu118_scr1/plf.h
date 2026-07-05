@@ -104,6 +104,7 @@
 
 #define PLF_MEM_TEST_ENABLED 1
 #define PLF_XMODEM_ENABLED 1
+#define PLF_HWCNT_DUMP 1
 
 //----------------------
 // IPIC configuration
